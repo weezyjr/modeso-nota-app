@@ -1,0 +1,33 @@
+{
+  "name": "modeso-nota-api",
+  "version": "1.0.0",
+  "description": "Nota (note in Latin) is a note-taking service, which is available on the web. Nota offers users to create notes, and share their notes with their friends.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "mocha ./tests --recursive",
+    "db": "mysql -u root -p -e 'source db_init.sql'"
+  },
+  "author": "Ahmed Adel",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-rate-limit": "^3.4.0",
+    "helmet": "^3.15.1",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "parse-error": "^0.2.0",
+    "sequelize": "^4.43.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.15.1",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10"
+  }
+}
