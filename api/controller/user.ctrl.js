@@ -58,3 +58,37 @@ module.exports.register = async function (req, res, next) {
         next(error);
     }
 }
+
+module.exports.readProfile = async function (req, res, next) {
+    try {
+
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID)
+            throw new Error('Bad request');
+
+        // check if the email already exist
+        await User.findOne({
+            where: {
+                id: req.userID,
+            }
+        }).then((user) => {
+            if (user) {
+                // respond with the current logged user
+                res.statusCode = 200;
+                res.json({
+                    status: 'success',
+                    message: 'User retrived successfly',
+                    data: user
+                })
+            } else {
+                res.status(401).send({
+                    status: 'unauthorized',
+                    message: 'This user is not authorized!.'
+                });
+            }
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
