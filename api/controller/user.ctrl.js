@@ -92,3 +92,49 @@ module.exports.readProfile = async function (req, res, next) {
         next(error);
     }
 }
+
+// TODO: Add validators
+module.exports.login = async function (req, res, next) {
+    try {
+        // check if the request is valid
+        if (!req || !req.body || !req.body.data || !req.body.data.username || !req.body.data.password)
+            throw new Error('Request must contain username and password');
+
+        // shorthand for req.body.data
+        const reqUser = req.body.data;
+
+        // check if the username exist
+        await User.findOne({
+            where: {
+                username: reqUser.username
+            }
+        }).then((user) => {
+
+            // there is no user with that username
+            if (!user)
+                throw new Error('The username: ' + reqUser.username + ' doesn\'t exists');
+
+            // compare the passwords
+            const passwordMatch = bcrypt.compareSync(reqUser.password, user.password);
+
+            if (passwordMatch) {
+                // respond with user object 
+                res.statusCode = 200;
+                res.json({
+                    status: 'success',
+                    message: 'User has logged successfly',
+                    data: user
+                });
+            } else {
+                // the username match but the password doesn't
+                res.status(401).send({
+                    status: 'unauthorized',
+                    message: 'The password is incorrect!.'
+                });
+            }
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
