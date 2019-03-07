@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('./db.connection');
-const auth = require('../auth');
 
 const User = db.define('User', {
 
@@ -70,12 +69,6 @@ const User = db.define('User', {
 User.prototype.toJSON = function () {
     // copy all the user feilds
     const user = Object.assign({}, this.get());
-
-    // generate JSON Web Token
-    const jwt = auth.generateJWT(user.id);
-
-    //attach the token to the user object
-    user.jwt = jwt;
 
     // delete the sensitive feilds
     delete user.password;

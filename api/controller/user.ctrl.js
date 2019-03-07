@@ -1,5 +1,6 @@
 const User = require('../model/user.model');
 const bcrypt = require('bcryptjs');
+const auth = require('../auth')
 
 module.exports.register = async function (req, res, next) {
     try {
@@ -36,12 +37,21 @@ module.exports.register = async function (req, res, next) {
 
         // create the user and add it to the database
         await User.create(reqUser).then((user) => {
+
+            // generate JWT
+            const jwt = auth.generateJWT(user.id);
+
+            // attach the JWT to the created user
+            const createdUser = Object.assign(user.toJSON(), {
+                jwt
+            });
+
             // response
             res.statusCode = 200;
             res.json({
-                status: "success",
-                message: "User created successfly",
-                data: user
+                status: 'success',
+                message: 'User created successfly',
+                data: createdUser
             })
         });
     } catch (error) {
