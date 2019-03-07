@@ -76,26 +76,33 @@ app.get('/robots.txt', function (req, res) {
 
 //----- Error Handling Middlewares -----//
 // not found route error (404)
-app.use(function (req, res) {
-    return res.status(404).send({
+app.use(function (req, res, next) {
+    // respond with status code 400 and the wrong route
+    res.statusCode = 400;
+    res.json({
         status: "error",
         message: 'Route ' + req.url + ' Not found.'
-    });
+    })
 });
 
 
 // bad request error (500)
-app.use(function (err, req, res) {
-    return res.status(500).send({
+app.use(function (err, req, res, next) {
+    // parse error object
+    const message = parseError(err).message || 'something went wrong !';
+    
+    // respond with status code 500 and the error message
+    res.statusCode = 500;
+    res.json({
         status: "error",
-        message: parseError(err),
-    });
+        message
+    })
 });
 
 
 // emitted whenever a Promise has been rejected and an error handler was attached to it 
-process.on('unhandledRejection', error => {
-    console.error('Uncaught Error', parseError(error));
+process.on('unhandledRejection', (err) => {
+    console.error('Uncaught Error', parseError(err));
 });
 
 
