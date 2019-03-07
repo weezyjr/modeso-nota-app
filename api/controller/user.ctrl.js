@@ -1,4 +1,5 @@
 const User = require('../model/user.model');
+const bcrypt = require('bcryptjs');
 
 module.exports.register = async function (req, res, next) {
     try {
@@ -9,6 +10,9 @@ module.exports.register = async function (req, res, next) {
 
         // shorthand for req.body.data
         const reqUser = req.body.data;
+
+        // hash the user password
+        reqUser.password = bcrypt.hashSync(reqUser.password, 8);
 
         // check if the username already exist
         await User.findOne({
