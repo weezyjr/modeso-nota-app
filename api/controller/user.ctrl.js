@@ -118,12 +118,21 @@ module.exports.login = async function (req, res, next) {
             const passwordMatch = bcrypt.compareSync(reqUser.password, user.password);
 
             if (passwordMatch) {
+
+                // generate JWT
+                const jwt = auth.generateJWT(user.id);
+
+                // attach the JWT to the created user
+                const createdUser = Object.assign(user.toJSON(), {
+                    jwt
+                });
+
                 // respond with user object 
                 res.statusCode = 200;
                 res.json({
                     status: 'success',
                     message: 'User has logged successfly',
-                    data: user
+                    data: createdUser
                 });
             } else {
                 // the username match but the password doesn't
