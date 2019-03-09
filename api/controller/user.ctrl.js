@@ -263,7 +263,11 @@ module.exports.updateUser = async function (req, res, next) {
             where: {
                 id: req.userID
             }
-        }).then(() => {
+        }).then((results) => {
+            // if no results found
+            if (!results[0])
+            throw new Error('Note not found');
+
             // respond with the updated feilds
             res.statusCode = 200;
             res.json({
@@ -295,7 +299,11 @@ module.exports.deleteUser = async function (req, res, next) {
             where: {
                 id: req.userID,
             }
-        }).then(() => {
+        }).then((results) => {
+            // if no results found
+            if (!results[0])
+                throw new Error('Note not found');
+
             // respond with the success
             res.statusCode = 200;
             res.json({
