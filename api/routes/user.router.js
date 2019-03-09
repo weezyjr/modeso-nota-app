@@ -8,4 +8,7 @@ router.post('/login', User.login);
 
 router.get('/profile', Auth.decodeJWT, User.readProfile);
 
+router.get('/search/:query', User.searchForUser);
+
+
 module.exports = router;

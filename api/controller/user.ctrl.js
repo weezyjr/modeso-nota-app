@@ -2,6 +2,7 @@ const User = require('../model/user.model');
 const bcrypt = require('bcryptjs');
 const auth = require('../auth')
 
+// register new user
 module.exports.register = async function (req, res, next) {
     try {
 
@@ -59,6 +60,7 @@ module.exports.register = async function (req, res, next) {
     }
 }
 
+// read the logged in profile
 module.exports.readProfile = async function (req, res, next) {
     try {
 
@@ -94,6 +96,7 @@ module.exports.readProfile = async function (req, res, next) {
 }
 
 // TODO: Add validators
+// login and authenticate
 module.exports.login = async function (req, res, next) {
     try {
         // check if the request is valid
@@ -139,6 +142,61 @@ module.exports.login = async function (req, res, next) {
                 res.status(401).send({
                     statusText: 'unauthorized',
                     message: 'The password is incorrect!.'
+                });
+            }
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+// search for user by username or email
+module.exports.searchForUser = async function (req, res, next) {
+    try {
+        // check if the request is valid
+        if (!req || !req.params || !req.params.query)
+            throw new Error('Request must contain body and a query parameter.');
+
+        // shorthand for req.body.query
+        const query = req.params.query;
+
+        await User.findAll({
+            where: {
+                $or: [{
+                    // search by exact email
+                    email: {
+                        $eq: query
+                    }
+                }, {
+                    // search by alike username
+                    username: {
+                        like: '%' + query + '%'
+                    }
+                }, {
+                    fullname: {
+                        // search by alike fullname
+                        like: '%' + query + '%'
+                    }
+                }]
+            },
+            attributes: ['username', 'fullname', 'id']
+        }).then((users) => {
+            if (users) {
+                // respond with the users
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'Users was found successfly',
+                    data: users
+                });
+            } else {
+                // respond with empty array (no users)
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'No user was found',
+                    data: []
                 });
             }
         });
