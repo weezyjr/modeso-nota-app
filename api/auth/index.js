@@ -42,3 +42,17 @@ module.exports.decodeJWT = async function (req, res, next) {
         next(error);
     }
 }
+
+module.exports.isAuthenticated = async function (User, id) {
+    // get the user
+    await User.findOne({
+        where: {
+            id
+        }
+    }).then((user) => {
+        if (!user) {
+            throw new Error('This user is not authorized!');
+        }
+    });
+
+}
