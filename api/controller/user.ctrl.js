@@ -1,6 +1,7 @@
 const User = require('../model/user.model');
 const bcrypt = require('bcryptjs');
 const auth = require('../auth')
+const isAuthenticated = require('../auth').isAuthenticated;
 
 // register new user
 module.exports.register = async function (req, res, next) {
@@ -68,7 +69,7 @@ module.exports.readProfile = async function (req, res, next) {
         if (!req || !req.userID)
             throw new Error('Bad request');
 
-        // check if the email already exist
+        // get the user
         await User.findOne({
             where: {
                 id: req.userID,
@@ -157,6 +158,10 @@ module.exports.searchForUser = async function (req, res, next) {
         if (!req || !req.params || !req.params.query)
             throw new Error('Request must contain body and a query parameter.');
 
+        
+        // check if the user is authenticated
+        await isAuthenticated(User, req.userID);
+
         // shorthand for req.body.query
         const query = req.params.query;
 
@@ -211,8 +216,12 @@ module.exports.updateUser = async function (req, res, next) {
     try {
         // check if the request is valid and the JWT has decoded
         if (!req || !req.userID || !req.body || !req.body.data)
-            throw new Error('Bad request' + req.body.data);
+            throw new Error('Bad request');
 
+
+        // check if the user is authenticated
+        await isAuthenticated(User, req.userID);
+        
         // shorthand for req.body.data
         const reqUser = req.body.data;
 
@@ -276,6 +285,10 @@ module.exports.deleteUser = async function (req, res, next) {
         // check if the request is valid and the JWT has decoded
         if (!req || !req.userID)
             throw new Error('Bad request');
+
+        
+        // check if the user is authenticated
+        await isAuthenticated(User, req.userID);
 
         // delete the current user
         await User.destroy({

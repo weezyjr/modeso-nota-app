@@ -12,6 +12,6 @@ router.put('/profile', Auth.decodeJWT, User.updateUser);
 
 router.delete('/profile', Auth.decodeJWT, User.deleteUser)
 
-router.get('/search/:query', User.searchForUser);
+router.get('/search/:query', Auth.decodeJWT, User.searchForUser);
 
 module.exports = router;
