@@ -71,3 +71,57 @@ module.exports.uploadImage = async function (req, res, next) {
         next(error);
     }
 }
+
+
+// create new note
+module.exports.create = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID || !req.body || !req.body.data)
+            throw new Error('Bad request');
+
+
+        // shorthand for req.body.data
+        const reqNote = req.body.data;
+
+        // check if the note is empty
+        if (!reqNote.text && !reqNote.image && !reqNote.title)
+            throw new Error('Can\'t create empty note!')
+
+        // validate image url
+        if (reqNote.image) {
+            if (!reqNote.image.startsWith(HOST_URL)) {
+                throw new Error('Invalid image source');
+            }
+        }
+
+        // get the creator user
+        await User.findOne({
+            where: {
+                id: req.userID,
+            }
+        }).then(async (user) => {
+            if (user) {
+                // create the note
+                await user.createNote(reqNote).then((note) => {
+                    // respond with the created note
+                    res.statusCode = 200;
+                    res.json({
+                        statusText: 'success',
+                        message: 'Note created successfly',
+                        data: note
+                    })
+                });
+            } else {
+                res.status(401).send({
+                    statusText: 'unauthorized',
+                    message: 'This user is not authorized!.'
+                });
+            }
+        });
+
+
+    } catch (error) {
+        next(error);
+    }
+}
