@@ -9,7 +9,7 @@ const User = db.define('User', {
         allowNull: false,
         validate: {
             is: {
-                args: /^[a-zA-Z1-9_]+$/i,
+                args: /^[a-zA-Z1-9_.]+$/i,
                 msg: 'Username can only consist of alphabetic characters, numbers and underscores (e.g. John_Doe123).'
             },
             len: {
@@ -51,7 +51,7 @@ const User = db.define('User', {
         allowNull: false,
         validate: {
             is: {
-                args: /^[a-zA-Z\s]+$/i,
+                args: /^([a-zA-Z]+\s?)+$/i,
                 msg: 'Names can only consist of alphabetic characters and spaces (e.g. John Doe).'
             },
             len: {
