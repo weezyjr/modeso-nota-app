@@ -1,0 +1,10 @@
+<div class="container py-5">
+
+  <div class="card-columns">
+    <app-note *ngFor="let note of myNotes" [title]="note?.title" [img]="note?.image">
+      {{note?.text}}
+    </app-note>
+  </div>
+
+</div>
+<notifier-container></notifier-container>
