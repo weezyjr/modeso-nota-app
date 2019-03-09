@@ -180,3 +180,47 @@ module.exports.update = async function (req, res, next) {
         next(error);
     }
 }
+
+
+// delete note
+module.exports.update = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID || !req.body || !req.body.data)
+            throw new Error('Bad request');
+
+        // the request must contain the note id
+        if (!req.body.data.id)
+            throw new Error('Data must include the note id')
+
+        // shorthand for req.body.data.id
+        const noteID = req.body.data.id;
+
+        // get the value of isAuthenticated (the current logged in user if exist)
+        await isAuthenticated(User, req.userID).then(async (user) => {
+            // search for a note where it matches the id sent
+            // and its author the currently logged user
+            await Note.destroy({
+                where: {
+                    id: noteID,
+                    author: user.username
+                }
+            }).then((result) => {
+                // if no results found
+                if (!result)
+                    throw new Error('Note not found');
+
+                // respond with the created note
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'Note deleted successfly',
+                    data: result
+                })
+            });
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
