@@ -9,6 +9,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { NotifierModule } from 'angular-notifier';
 import { UiModule } from './ui/ui.module';
+import { NotesModule } from './notes/notes.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { UiModule } from './ui/ui.module';
     HttpClientModule,
     UserModule,
     UiModule,
+    NotesModule,
     // Notification module configuration
     NotifierModule.withConfig({
       // Custom options in here
