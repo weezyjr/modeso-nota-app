@@ -1,9 +1,13 @@
+import { Note } from './Note';
+
 export class User {
+  public id: string;
   public fullname: string;
   public email: string;
   public username: string;
   public password?: string;
   public jwt?: string;
+  public notes?: Note[];
 
   /**
    *  USER
