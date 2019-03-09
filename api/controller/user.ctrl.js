@@ -254,22 +254,43 @@ module.exports.updateUser = async function (req, res, next) {
             where: {
                 id: req.userID
             }
-        }).then((updated) => {
-            if (updated) {
-                // respond with the updated feilds
-                res.statusCode = 200;
-                res.json({
-                    statusText: 'success',
-                    message: 'User updated successfly',
-                    data: reqUser
-                })
-            } else {
-                res.status(401).send({
-                    statusText: 'unauthorized',
-                    message: 'This user is not authorized!.'
-                });
-            }
+        }).then(() => {
+            // respond with the updated feilds
+            res.statusCode = 200;
+            res.json({
+                statusText: 'success',
+                message: 'User updated successfly',
+                data: reqUser
+            })
         })
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+// delete the current user
+module.exports.deleteUser = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID)
+            throw new Error('Bad request');
+
+        // delete the current user
+        await User.destroy({
+            where: {
+                id: req.userID,
+            }
+        }).then(() => {
+            // respond with the success
+            res.statusCode = 200;
+            res.json({
+                statusText: 'success',
+                message: 'User deleted successfly',
+                data: {}
+            })
+        });
 
     } catch (error) {
         next(error);
