@@ -299,9 +299,9 @@ module.exports.deleteUser = async function (req, res, next) {
             where: {
                 id: req.userID,
             }
-        }).then((results) => {
+        }).then((result) => {
             // if no results found
-            if (!results[0])
+            if (!result)
                 throw new Error('Note not found');
 
             // respond with the success
