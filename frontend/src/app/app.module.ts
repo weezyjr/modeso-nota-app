@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { NotifierModule } from 'angular-notifier';
+import { UiModule } from './ui/ui.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NotifierModule } from 'angular-notifier';
     AppRoutingModule,
     HttpClientModule,
     UserModule,
+    UiModule,
     // Notification module configuration
     NotifierModule.withConfig({
       // Custom options in here

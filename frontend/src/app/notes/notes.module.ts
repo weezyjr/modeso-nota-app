@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { NotifierModule } from 'angular-notifier';
+import { UiModule } from '../ui/ui.module';
 
 @NgModule({
   declarations: [],
@@ -12,6 +13,7 @@ import { NotifierModule } from 'angular-notifier';
     FormsModule,
     AppRoutingModule,
     CommonModule,
+    UiModule,
     // Notification module configuration
     NotifierModule.withConfig( {
       // Custom options in here

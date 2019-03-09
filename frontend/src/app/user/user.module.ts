@@ -6,11 +6,13 @@ import { NotifierModule } from 'angular-notifier';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './views/register/register.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { UiModule } from '../ui/ui.module';
 
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
   imports: [
+    UiModule,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
