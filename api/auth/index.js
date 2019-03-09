@@ -20,7 +20,7 @@ module.exports.decodeJWT = async function (req, res, next) {
 
         // in case of missing x-access-token header
         if (!token) return res.status(401).send({
-            status: 'unauthorized',
+            statusText: 'unauthorized',
             message: 'No token provided.'
         });
 
@@ -28,7 +28,7 @@ module.exports.decodeJWT = async function (req, res, next) {
         await jwt.verify(token, JWT_SECRET, function (err, decodedObject) {
             // if the token is fake
             if (err || !decodedObject) return res.status(500).send({
-                status: 'unauthorized',
+                statusText: 'unauthorized',
                 message: 'Failed to authenticate token.'
             });
 
@@ -41,4 +41,20 @@ module.exports.decodeJWT = async function (req, res, next) {
     } catch (error) {
         next(error);
     }
+}
+
+module.exports.isAuthenticated = async function (User, id) {
+    // get the user
+    return await User.findOne({
+        where: {
+            id
+        }
+    }).then((user) => {
+        if (!user) {
+            throw new Error('This user is not authorized!');
+        }
+        return user;
+
+    });
+
 }

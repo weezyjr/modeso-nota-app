@@ -1,7 +1,9 @@
 const User = require('../model/user.model');
 const bcrypt = require('bcryptjs');
 const auth = require('../auth')
+const isAuthenticated = require('../auth').isAuthenticated;
 
+// register new user
 module.exports.register = async function (req, res, next) {
     try {
 
@@ -49,7 +51,7 @@ module.exports.register = async function (req, res, next) {
             // response
             res.statusCode = 200;
             res.json({
-                status: 'success',
+                statusText: 'success',
                 message: 'User created successfly',
                 data: createdUser
             })
@@ -59,6 +61,7 @@ module.exports.register = async function (req, res, next) {
     }
 }
 
+// read the logged in profile
 module.exports.readProfile = async function (req, res, next) {
     try {
 
@@ -66,7 +69,7 @@ module.exports.readProfile = async function (req, res, next) {
         if (!req || !req.userID)
             throw new Error('Bad request');
 
-        // check if the email already exist
+        // get the user
         await User.findOne({
             where: {
                 id: req.userID,
@@ -76,13 +79,13 @@ module.exports.readProfile = async function (req, res, next) {
                 // respond with the current logged user
                 res.statusCode = 200;
                 res.json({
-                    status: 'success',
+                    statusText: 'success',
                     message: 'User retrived successfly',
                     data: user
                 })
             } else {
                 res.status(401).send({
-                    status: 'unauthorized',
+                    statusText: 'unauthorized',
                     message: 'This user is not authorized!.'
                 });
             }
@@ -93,7 +96,7 @@ module.exports.readProfile = async function (req, res, next) {
     }
 }
 
-// TODO: Add validators
+// login and authenticate
 module.exports.login = async function (req, res, next) {
     try {
         // check if the request is valid
@@ -130,17 +133,184 @@ module.exports.login = async function (req, res, next) {
                 // respond with user object 
                 res.statusCode = 200;
                 res.json({
-                    status: 'success',
+                    statusText: 'success',
                     message: 'User has logged successfly',
                     data: createdUser
                 });
             } else {
                 // the username match but the password doesn't
                 res.status(401).send({
-                    status: 'unauthorized',
+                    statusText: 'unauthorized',
                     message: 'The password is incorrect!.'
                 });
             }
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+// search for user by username or email
+module.exports.searchForUser = async function (req, res, next) {
+    try {
+        // check if the request is valid
+        if (!req || !req.params || !req.params.query)
+            throw new Error('Request must contain body and a query parameter.');
+
+        
+        // check if the user is authenticated
+        await isAuthenticated(User, req.userID);
+
+        // shorthand for req.body.query
+        const query = req.params.query;
+
+        await User.findAll({
+            where: {
+                $or: [{
+                    // search by exact email
+                    email: {
+                        $eq: query
+                    }
+                }, {
+                    // search by alike username
+                    username: {
+                        like: '%' + query + '%'
+                    }
+                }, {
+                    fullname: {
+                        // search by alike fullname
+                        like: '%' + query + '%'
+                    }
+                }]
+            },
+            attributes: ['username', 'fullname', 'id']
+        }).then((users) => {
+            if (users) {
+                // respond with the users
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'Users was found successfly',
+                    data: users
+                });
+            } else {
+                // respond with empty array (no users)
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'No user was found',
+                    data: []
+                });
+            }
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+// update user
+module.exports.updateUser = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID || !req.body || !req.body.data)
+            throw new Error('Bad request');
+
+
+        // check if the user is authenticated
+        await isAuthenticated(User, req.userID);
+        
+        // shorthand for req.body.data
+        const reqUser = req.body.data;
+
+        // encrypt password if exist
+        if (reqUser.password)
+            reqUser.password = bcrypt.hashSync(reqUser.password, 8);
+
+        // check if the username already exist
+        await User.findOne({
+            where: {
+                username: reqUser.username,
+                // exclude the user being updated
+                id: {
+                    $not: req.userID
+                }
+            }
+        }).then((user) => {
+            if (user)
+                throw new Error('A user with the username: ' + user.username + ' already exists');
+        });
+
+        // check if the email already exist
+        await User.findOne({
+            where: {
+                email: reqUser.email,
+                // exclude the user being updated
+                id: {
+                    $not: req.userID
+                }
+            }
+        }).then((user) => {
+            if (user)
+                throw new Error('A user with the email: ' + user.email + ' already exists');
+        });
+
+
+        // update the current user
+        await User.update(reqUser, {
+            where: {
+                id: req.userID
+            }
+        }).then((results) => {
+            // if no results found
+            if (!results[0])
+            throw new Error('Note not found');
+
+            // respond with the updated feilds
+            res.statusCode = 200;
+            res.json({
+                statusText: 'success',
+                message: 'User updated successfly',
+                data: reqUser
+            })
+        })
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+// delete the current user
+module.exports.deleteUser = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID)
+            throw new Error('Bad request');
+
+        
+        // check if the user is authenticated
+        await isAuthenticated(User, req.userID);
+
+        // delete the current user
+        await User.destroy({
+            where: {
+                id: req.userID,
+            }
+        }).then((result) => {
+            // if no results found
+            if (!result)
+                throw new Error('Note not found');
+
+            // respond with the success
+            res.statusCode = 200;
+            res.json({
+                statusText: 'success',
+                message: 'User deleted successfly',
+                data: {}
+            })
         });
 
     } catch (error) {

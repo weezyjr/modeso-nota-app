@@ -2,6 +2,12 @@ const Sequelize = require('sequelize');
 const db = require('./db.connection');
 
 const User = db.define('User', {
+    
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true
+    },
 
     username: {
         type: Sequelize.STRING,
@@ -76,4 +82,5 @@ User.prototype.toJSON = function () {
     // return the new object
     return user;
 }
+
 module.exports = User;
