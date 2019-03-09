@@ -126,6 +126,75 @@ module.exports.create = async function (req, res, next) {
     }
 }
 
+// read user notes
+module.exports.readAll = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID)
+            throw new Error('Bad request');
+
+        // get the value of isAuthenticated (the current logged in user if exist)
+        await isAuthenticated(User, req.userID).then(async (user) => {
+            // search for a note where it matches the author
+            await Note.findAll({
+                where: {
+                    author: user.username
+                }
+            }).then((result) => {
+                // if no results found
+                if (!result)
+                    throw new Error('Note not found');
+
+                // respond with the created note
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'Note retrived successfly',
+                    data: result
+                })
+            });
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+// read all public notes
+module.exports.readAllPublic = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID)
+            throw new Error('Bad request');
+
+        // get the value of isAuthenticated (the current logged in user if exist)
+        await isAuthenticated(User, req.userID).then(async () => {
+            // search for a note where it matches the author
+            await Note.findAll({
+                where: {
+                    public: true
+                }
+            }).then((result) => {
+                // if no results found
+                if (!result)
+                    throw new Error('Note not found');
+
+                // respond with the created note
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'Note retrived successfly',
+                    data: result
+                })
+            });
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 // update note
 module.exports.update = async function (req, res, next) {
