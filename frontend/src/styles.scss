@@ -17,49 +17,64 @@ $shark: #202124;
 $tangaroa: #02142c;
 
 * {
-    font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6, input, span, div,
-article, section, p:not(.notifier__notification-message) {
-    color: $shark;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+span,
+div,
+article,
+section,
+p:not(.notifier__notification-message) {
+  color: $shark;
 }
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    height: 100%;
-    background: $tangaroa;
+  height: 100%;
+  background: $tangaroa;
 }
 
 .form-group {
-    input[type=email],
-    input[type=password],
-    input[type=text] {
-        outline: 0 none;
-        border: none;
-        background: #E6E7EE;
-        color: #43444C;
-        border-radius: 7.5px;
-    }
 
-    input[type=email]:focus,
-    input[type=password]:focus,
-    input[type=text]:focus {
-        box-shadow: none;
-        outline: 0 none;
-        border: none;
-        background: #E6E7EE;
-        color: #43444C;
-        border-radius: 7.5px;
-    }
+  input[type=email],
+  input[type=password],
+  input[type=text] {
+    outline: 0 none;
+    border: none;
+    background: #E6E7EE;
+    color: #43444C;
+    border-radius: 7.5px;
+  }
+
+  input[type=email]:focus,
+  input[type=password]:focus,
+  input[type=text]:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border: none;
+    background: #E6E7EE;
+    color: #43444C;
+    border-radius: 7.5px;
+  }
 }
 
 .card {
-    background: #FFFFFF;
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.3);
-    border-radius: 7.5px;
-    padding: 40px;
+  background: #FFFFFF;
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 7.5px;
+  padding: 40px;
+}
+
+.card-columns {
+  column-gap: 2.5rem;
 }

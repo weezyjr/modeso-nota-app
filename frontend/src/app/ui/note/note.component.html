@@ -1,0 +1,9 @@
+<article class="card note my-3">
+  <h1>{{title}}</h1>
+  <div class="img-contanier text-center pb-3" *ngIf="img">
+    <img [src]="img" [alt]="title" class="img-fluid">
+  </div>
+  <p>
+    <ng-content></ng-content>
+  </p>
+</article>
