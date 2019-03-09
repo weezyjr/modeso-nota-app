@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './views/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotifierModule } from 'angular-notifier';
+import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './views/register/register.component';
+import { AppRoutingModule } from '../app-routing.module';
+
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, RegisterComponent],
   imports: [
     HttpClientModule,
+    FormsModule,
+    AppRoutingModule,
     CommonModule,
     // Notification module configuration
     NotifierModule.withConfig( {
