@@ -13,6 +13,8 @@ const helmet = require('helmet')
 const cors = require('cors')
 const rateLimit = require("express-rate-limit");
 const logger = require('morgan');
+const path = require('path');
+const fileUpload = require('express-fileupload');
 
 
 // get environment variables
@@ -52,7 +54,24 @@ app.use(rateLimit({
 }));
 
 
+
+// allow file uploading
+app.use(fileUpload({
+    safeFileNames: true, // strip slashes from file names
+    preserveExtension: 4, // Preserves filename extension up to 4 char. when using safeFileNames
+    abortOnLimit: true, // Returns a HTTP 413 when the file is bigger than the size limit 
+    limits: {
+        // max 25mb file
+        fileSize: 25 * 1024 * 1024
+    }, 
+}));
+
 //----- Routes -----//
+
+// allow access to public/imgs
+app.use('/img', express.static(path.join(__dirname, 'public/imgs')))
+
+
 // server check
 app.get('/', function (req, res) {
     res.statusCode = 200;
@@ -90,7 +109,7 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
     // parse error object
     const message = parseError(err).message || 'something went wrong !';
-    
+
     // respond with status code 500 and the error message
     res.statusCode = 500;
     res.json({
