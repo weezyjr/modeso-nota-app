@@ -95,7 +95,6 @@ module.exports.readProfile = async function (req, res, next) {
     }
 }
 
-// TODO: Add validators
 // login and authenticate
 module.exports.login = async function (req, res, next) {
     try {
@@ -200,6 +199,77 @@ module.exports.searchForUser = async function (req, res, next) {
                 });
             }
         });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+// update user
+module.exports.updateUser = async function (req, res, next) {
+    try {
+        // check if the request is valid and the JWT has decoded
+        if (!req || !req.userID || !req.body || !req.body.data)
+            throw new Error('Bad request' + req.body.data);
+
+        // shorthand for req.body.data
+        const reqUser = req.body.data;
+
+        // encrypt password if exist
+        if (reqUser.password)
+            reqUser.password = bcrypt.hashSync(reqUser.password, 8);
+
+        // check if the username already exist
+        await User.findOne({
+            where: {
+                username: reqUser.username,
+                // exclude the user being updated
+                id: {
+                    $not: req.userID
+                }
+            }
+        }).then((user) => {
+            if (user)
+                throw new Error('A user with the username: ' + user.username + ' already exists');
+        });
+
+        // check if the email already exist
+        await User.findOne({
+            where: {
+                email: reqUser.email,
+                // exclude the user being updated
+                id: {
+                    $not: req.userID
+                }
+            }
+        }).then((user) => {
+            if (user)
+                throw new Error('A user with the email: ' + user.email + ' already exists');
+        });
+
+
+        // update the current user
+        await User.update(reqUser, {
+            where: {
+                id: req.userID
+            }
+        }).then((updated) => {
+            if (updated) {
+                // respond with the updated feilds
+                res.statusCode = 200;
+                res.json({
+                    statusText: 'success',
+                    message: 'User updated successfly',
+                    data: reqUser
+                })
+            } else {
+                res.status(401).send({
+                    statusText: 'unauthorized',
+                    message: 'This user is not authorized!.'
+                });
+            }
+        })
 
     } catch (error) {
         next(error);
