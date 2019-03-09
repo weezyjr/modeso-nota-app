@@ -1,24 +1,54 @@
 <div class="container-fluid login-page mx-auto d-flex align-items-center">
   <main class="card mx-auto my-4">
     <figure class="img-container m-auto text-center">
-      <img src="../../../../assets/user/login/user.svg" width="150"  height="150" class="img-fluid" alt="user">
+      <img src="../../../../assets/user/login/user.svg" width="150" height="150" class="img-fluid" alt="user">
     </figure>
-    <form class="mt-4">
+    <form class="mt-4" (ngSubmit)="login(loginForm?.valid)" #loginForm="ngForm">
+
       <div class="form-group">
+        <!-- Username Input -->
         <label for="username">Username</label>
-        <input name="username" type="text" class="form-control" placeholder="Enter Username">
+        <input name="username" [(ngModel)]="user.username" type="text" class="form-control" required minlength="3"
+          maxlength="20" pattern="^[a-zA-Z1-9_.]+$" placeholder="Enter Username" #username="ngModel">
+
+        <!-- Validation Errors-->
+        <small *ngIf="loginForm?.submitted || (!username?.valid && !username?.pristine)" class="form-text">
+          <div *ngIf="username?.errors?.required" class="text-warning"> Username is required </div>
+          <div *ngIf="username?.errors?.minlength || username?.errors?.maxlength" class="text-warning">
+            Username length must be 3 to 20 charachters
+          </div>
+          <div *ngIf="username?.errors?.pattern" class="text-warning">
+            Username can contain (letters, numbers, ., _) only
+          </div>
+        </small>
+
       </div>
+
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" placeholder="Password">
+
+        <!-- Password Input -->
+        <label for="password">Password</label>
+        <input type="password" [(ngModel)]="user.password" name="password" class="form-control" required minlength="8"
+          maxlength="255" placeholder="Password" #password="ngModel">
+
+
+        <!-- Validation Errors-->
+        <small *ngIf="loginForm?.submitted || (!password?.valid && !password?.pristine)" class="form-text">
+          <div *ngIf="password?.errors?.required" class="text-warning"> Password is required </div>
+          <div *ngIf="password?.errors?.minlength || password?.errors?.maxlength" class="text-warning">
+            Password length must be 8 to 255 charachters
+          </div>
+        </small>
+
       </div>
       <div class="pt-3">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block"> Login </button>
       </div>
       <div class="pt-4">
-          <span>Don't have an account? </span>
-         <a href=""> Sign up now! </a>
+        <span>Don't have an account? </span>
+        <a [routerLink]="['/register']"> Sign up now! </a>
       </div>
     </form>
   </main>
 </div>
+<notifier-container></notifier-container>
