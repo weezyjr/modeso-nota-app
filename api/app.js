@@ -57,7 +57,7 @@ app.use(rateLimit({
 app.get('/', function (req, res) {
     res.statusCode = 200;
     res.json({
-        status: "success",
+        statusText: "success",
         message: "Nota API is running"
     })
 })
@@ -80,7 +80,7 @@ app.use(function (req, res, next) {
     // respond with status code 400 and the wrong route
     res.statusCode = 400;
     res.json({
-        status: "error",
+        statusText: "error",
         message: 'Route ' + req.url + ' Not found.'
     })
 });
@@ -94,7 +94,7 @@ app.use(function (err, req, res, next) {
     // respond with status code 500 and the error message
     res.statusCode = 500;
     res.json({
-        status: "error",
+        statusText: "error",
         message
     })
 });

@@ -49,7 +49,7 @@ module.exports.register = async function (req, res, next) {
             // response
             res.statusCode = 200;
             res.json({
-                status: 'success',
+                statusText: 'success',
                 message: 'User created successfly',
                 data: createdUser
             })
@@ -76,13 +76,13 @@ module.exports.readProfile = async function (req, res, next) {
                 // respond with the current logged user
                 res.statusCode = 200;
                 res.json({
-                    status: 'success',
+                    statusText: 'success',
                     message: 'User retrived successfly',
                     data: user
                 })
             } else {
                 res.status(401).send({
-                    status: 'unauthorized',
+                    statusText: 'unauthorized',
                     message: 'This user is not authorized!.'
                 });
             }
@@ -130,14 +130,14 @@ module.exports.login = async function (req, res, next) {
                 // respond with user object 
                 res.statusCode = 200;
                 res.json({
-                    status: 'success',
+                    statusText: 'success',
                     message: 'User has logged successfly',
                     data: createdUser
                 });
             } else {
                 // the username match but the password doesn't
                 res.status(401).send({
-                    status: 'unauthorized',
+                    statusText: 'unauthorized',
                     message: 'The password is incorrect!.'
                 });
             }
