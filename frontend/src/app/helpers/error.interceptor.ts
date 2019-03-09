@@ -26,10 +26,17 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
 
         // return the error message or the statusText
-        if (serverError.error || serverError.statusText) {
-          error = serverError.error.message || serverError.statusText;
-          this.notifierService.notify('error', error);
+        if (serverError.error || serverError.statusText || serverError.message) {
+          error = serverError.error.message || serverError.statusText || serverError.message;
         }
+
+        // when the server fail to connect to the api
+        if (error.startsWith('Unknown Error')) {
+          error = 'Failed to connect to the server, please check your internet connection';
+        }
+
+        // notify the user with the error
+        this.notifierService.notify('error', error);
       }
       return throwError(error);
     }));
