@@ -7,10 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './views/register/register.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { UiModule } from '../ui/ui.module';
+import { ProfileComponent } from './views/profile/profile.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent, ProfileComponent],
   imports: [
     UiModule,
     HttpClientModule,
@@ -18,7 +19,7 @@ import { UiModule } from '../ui/ui.module';
     AppRoutingModule,
     CommonModule,
     // Notification module configuration
-    NotifierModule.withConfig( {
+    NotifierModule.withConfig({
       // Custom options in here
       position: {
         horizontal: {
@@ -39,7 +40,9 @@ import { UiModule } from '../ui/ui.module';
         showDismissButton: true,
         stacking: 4
       },
-    } )
+    })
   ],
+
+  exports: [LoginComponent, RegisterComponent, ProfileComponent],
 })
 export class UserModule { }

@@ -8,7 +8,11 @@ import { User } from 'src/app/models/User';
 })
 export class UserFormComponent implements OnInit {
 
+  // password is not required in update mode
+  @Input() isUpdate = false;
+  // current user
   @Input() user: User = new User();
+  // output the submitted user
   @Output() submitUser: EventEmitter<User> = new EventEmitter();
 
   constructor() { }
@@ -17,6 +21,7 @@ export class UserFormComponent implements OnInit {
   }
 
   submitForm(isValid: boolean) {
+    // check if the form is valid
     if (isValid) {
       this.submitUser.emit(this.user);
     }

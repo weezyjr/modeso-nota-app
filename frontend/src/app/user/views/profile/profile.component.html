@@ -1,0 +1,12 @@
+<div class="container-fluid update-page mx-auto d-flex align-items-center">
+  <main class="card mx-auto my-4">
+    <h1> Update your profile </h1>
+    <app-user-form (submitUser)="update($event)" isUpdate="true" [user]="user"></app-user-form>
+    <div class="pt-4">
+      <button type="button" (click)="delete()" class="btn btn-lg btn-block btn-danger"> Delete your account </button>
+    </div>
+  </main>
+</div>
+
+
+<notifier-container></notifier-container>
