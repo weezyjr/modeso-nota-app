@@ -17,12 +17,12 @@ export class JwtInterceptor implements HttpInterceptor {
         }
       });
     }
-
+/*
     // attach content-type if it doesn't exist
     if (!request.headers.has('Content-Type')) {
       request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
     }
-
+*/
     // only accept JSON
     request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
 
