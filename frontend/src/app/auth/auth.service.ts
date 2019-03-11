@@ -17,6 +17,7 @@ export class AuthService {
   // endpoints
   private loginEndPoint = apiHost + 'user/login';
   private registerEndPoint = apiHost + 'user/register';
+  private profileEndPoint = apiHost + 'user/profile';
 
 
   // Current Logged in User Subject
@@ -122,6 +123,47 @@ export class AuthService {
           const user: User = response.data as User;
           // save the user and store it in the local storage
           this.storeUser(user);
+          return response.message;
+        }));
+  }
+
+
+  /**
+   * UpdateUser
+   * @param requestUser the user should have any of username, fullname, email or password
+   */
+  public updateUser(requestUser: User): Observable<string> {
+    return this.http.put<ResponseObject>(this.profileEndPoint, new RequestObject(requestUser))
+      .pipe(
+        take(1),
+        map((response) => {
+          // in case of response error
+          if (response.error) {
+            return response.error;
+          }
+          // get the user
+          const user: User = response.data as User;
+          // save the user and store it in the local storage
+          this.storeUser(user);
+          return response.message;
+        }));
+  }
+
+  /**
+   * Delete User
+   * @param requestUser the user should contain id
+   */
+  public deleteUser(): Observable<string> {
+    return this.http.delete<ResponseObject>(this.profileEndPoint )
+      .pipe(
+        take(1),
+        map((response) => {
+          // in case of response error
+          if (response.error) {
+            return response.error;
+          }
+          // remove the user from local storage
+          this.removeUser();
           return response.message;
         }));
   }
