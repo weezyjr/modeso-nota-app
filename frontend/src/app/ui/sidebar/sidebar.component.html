@@ -1,0 +1,30 @@
+<aside class="side-bar text-center py-5">
+  <div class="top">
+    
+    <div class="py-3" [ngClass]="{'selected': selectedTab == '/profile'}">
+      <div class="icon" (click)="goTo('/login')" >
+        <img src="../../../assets/icons/user.svg" width="24" alt="">
+      </div>
+    </div>
+
+    <div class="py-3" [ngClass]="{'selected': selectedTab == '/notes'}">
+      <div class="icon text-center" (click)="goTo('/notes')">
+        <img src="../../../assets/icons/archive.svg" width="24" alt="">
+      </div>
+    </div>
+
+    <div class="py-3" [ngClass]="{'selected': selectedTab == '/notes/public'}">
+      <div class="icon" (click)="goTo('/notes/public')">
+        <img src="../../../assets/icons/public.svg" width="24" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="py-3">
+      <div class="icon" (click)="logout()">
+        <img src="../../../assets/icons/logout.svg" width="24" alt="">
+      </div>
+    </div>
+  </div>
+</aside>
