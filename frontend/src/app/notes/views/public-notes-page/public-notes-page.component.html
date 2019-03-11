@@ -1,0 +1,14 @@
+<section class="container mx-auto note-page py-5">
+
+  <h2 class="py-4"> Public Notes </h2>
+
+  <div class="card-columns">
+    <app-note (click)="openModal(note);" *ngFor="let note of notes" [note]="note"></app-note>
+
+  </div>
+</section>
+
+
+<app-modal *ngIf="modalOpened">
+  <app-note (click)="openModal(note);" [note]="currentNote"></app-note>
+</app-modal>

@@ -1,0 +1,19 @@
+<section>
+  <div class="container mx-auto note-page py-5">
+
+    <h2 class="py-4"> Create Note </h2>
+
+    <app-note-form (done)="getNotes()"></app-note-form>
+
+
+    <h2 class="py-4"> Your Notes </h2>
+
+    <div class="card-columns">
+      <app-note (click)="openModal(note);" *ngFor="let note of myNotes" [note]="note"></app-note>
+    </div>
+
+  </div>
+</section>
+<app-modal *ngIf="modalOpened">
+  <app-note-form (done)="closeModal(); getNotes();" [note]="currentNote"></app-note-form>
+</app-modal>

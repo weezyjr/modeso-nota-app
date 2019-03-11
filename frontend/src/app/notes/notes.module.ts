@@ -5,12 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { NotifierModule } from 'angular-notifier';
 import { UiModule } from '../ui/ui.module';
-import { MyNotesPageComponent } from './my-notes-page/my-notes-page.component';
-import { SingleNotePageComponent } from './single-note-page/single-note-page.component';
-import { PublicNotesPageComponent } from './public-notes-page/public-notes-page.component';
+import { MyNotesPageComponent } from './views/my-notes-page/my-notes-page.component';
+import { PublicNotesPageComponent } from './views/public-notes-page/public-notes-page.component';
 
 @NgModule({
-  declarations: [MyNotesPageComponent, SingleNotePageComponent, PublicNotesPageComponent],
+  declarations: [MyNotesPageComponent, PublicNotesPageComponent],
   imports: [
     HttpClientModule,
     FormsModule,

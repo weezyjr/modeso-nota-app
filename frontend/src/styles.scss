@@ -2,10 +2,6 @@
 
 // Bootstrap
 //replace bootstrap variables
-
-
-
-
 $warning: orange;
 @import "~bootstrap/scss/bootstrap";
 
@@ -77,6 +73,19 @@ body {
     border-radius: 7.5px;
   }
 }
+
+.note-page {
+  h2 {
+
+    font-weight: 600;
+    line-height: 12px;
+    font-size: 24px;
+    letter-spacing: -0.43px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+}
+
 
 .card {
   background: #FFFFFF;

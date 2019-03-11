@@ -10,10 +10,12 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { NotifierModule } from 'angular-notifier';
 import { UiModule } from './ui/ui.module';
 import { NotesModule } from './notes/notes.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
