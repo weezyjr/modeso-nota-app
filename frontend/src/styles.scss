@@ -2,6 +2,10 @@
 
 // Bootstrap
 //replace bootstrap variables
+
+
+
+
 $warning: orange;
 @import "~bootstrap/scss/bootstrap";
 
@@ -34,6 +38,12 @@ section,
 p:not(.notifier__notification-message) {
   color: $shark;
 }
+
+h1{
+  font-weight: bold;
+  font-size: 20px;
+}
+
 
 html {
   height: 100%;
@@ -77,4 +87,35 @@ body {
 
 .card-columns {
   column-gap: 2.5rem;
+}
+
+.card-columns {
+  @include media-breakpoint-only(sm) {
+    column-count: 1;
+  }
+
+  @include media-breakpoint-only(md) {
+    column-count: 2;
+  }
+
+  @include media-breakpoint-only(lg) {
+    column-count: 3;
+  }
+
+  @include media-breakpoint-only(xl) {
+    column-count: 4;
+  }
+}
+
+
+@media (max-width: 992px) {
+  h1, .title-input {
+    font-size: 18px !important;
+  }
+  .btn-flat{
+    font-size: 11px;
+  }
+  body {
+    font-size: 12px;
+  }
 }
