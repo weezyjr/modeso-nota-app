@@ -15,6 +15,7 @@ const rateLimit = require("express-rate-limit");
 const logger = require('morgan');
 const path = require('path');
 const fileUpload = require('express-fileupload');
+const db = require('./model/db.connection');
 
 
 // get environment variables
@@ -127,5 +128,6 @@ process.on('unhandledRejection', (err) => {
 
 //----- Run the server -----//
 app.listen(PORT, () => {
+    db.sync({ force: false });
     console.log('Listening on port ' + PORT)
 })
