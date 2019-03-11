@@ -27,15 +27,17 @@ export class NoteFormComponent implements OnInit {
   }
 
   // Share note (Share and create) or (share and update)
-  share() {
+  async share() {
     // if the note already exist
     if (this.note.id) {
       this.note.public = true;
-      this.updateNote();
+      await this.updateNote();
     } else {
       // the note is not created yet
       this.note.public = true;
-      this.createNote();
+      await this.createNote();
+      // clear after create
+      this.clearNote();
     }
     this.done.emit(true);
   }
@@ -49,13 +51,15 @@ export class NoteFormComponent implements OnInit {
   }
 
   // save current note
-  save() {
+  async save() {
     if (this.note.id) {
       // if the note already exist
-      this.updateNote();
+      await this.updateNote();
     } else {
       // the note is not created yet
-      this.createNote();
+      await this.createNote();
+      // clear note after save
+      this.clearNote();
     }
     this.done.emit(true);
   }
@@ -97,9 +101,8 @@ export class NoteFormComponent implements OnInit {
 
   // create a note in the db
   async createNote() {
-    await this.noteService.createNote(this.note).subscribe((res: ResponseObject) => {
-      this.note.id = res.data.id;
-      this.notifierService.notify('success', res.message);
+    await this.noteService.createNote(this.note).subscribe((msg) => {
+      this.notifierService.notify('success', msg);
     });
   }
 

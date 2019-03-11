@@ -1,8 +1,8 @@
 <article class="card note my-3">
   <h1>{{note?.title}}</h1>
   <h6 *ngIf="note?.author" class="pb-2">@{{note?.author}}</h6>
-  <div class="img-contanier text-center pb-3" *ngIf="note?.img">
-    <img [src]="img" [alt]="title" class="img-fluid">
+  <div class="img-contanier text-center pb-3" *ngIf="note?.image">
+    <img [src]="note?.image" [alt]="title" class="img-fluid">
   </div>
   <p>
     {{note?.text}}
