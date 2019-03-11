@@ -9,6 +9,9 @@
 </section>
 
 
-<app-modal *ngIf="modalOpened">
+<app-modal *ngIf="modalOpened" (clickOutside)="closeModal()">
   <app-note (click)="openModal(note);" [note]="currentNote"></app-note>
 </app-modal>
+
+
+<notifier-container></notifier-container>
