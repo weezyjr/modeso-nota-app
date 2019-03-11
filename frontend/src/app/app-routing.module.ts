@@ -5,21 +5,21 @@ import { RegisterComponent } from './user/views/register/register.component';
 import { PublicNotesPageComponent } from './notes/views/public-notes-page/public-notes-page.component';
 import { MyNotesPageComponent } from './notes/views/my-notes-page/my-notes-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { LoginRegisterGuard } from './auth/guards/login-register.guard';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [LoginRegisterGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [LoginRegisterGuard] },
   {
-    path: 'dashboard', component: DashboardComponent,
+    path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard],
     children: [
-      { path: '', component: MyNotesPageComponent },
-      { path: 'notes', component: MyNotesPageComponent },
-      { path: 'notes/public', component: PublicNotesPageComponent }
+      { path: '', redirectTo: '/dashboard/notes', pathMatch: 'full', canActivate: [AuthGuard] },
+      { path: 'notes', component: MyNotesPageComponent, canActivate: [AuthGuard] },
+      { path: 'notes/public', component: PublicNotesPageComponent, canActivate: [AuthGuard] }
     ]
-  },
-  { path: 'notes', component: MyNotesPageComponent },
-  { path: 'notes/public', component: PublicNotesPageComponent }
+  }
 ];
 
 @NgModule({

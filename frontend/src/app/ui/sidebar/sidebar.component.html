@@ -1,20 +1,20 @@
 <aside class="side-bar text-center py-5">
   <div class="top">
-    
-    <div class="py-3" [ngClass]="{'selected': selectedTab == '/profile'}">
-      <div class="icon" (click)="goTo('/login')" >
+
+    <div class="py-3" [ngClass]="{'selected': selectedTab == profileUrl}">
+      <div class="icon" (click)="goTo(profileUrl)" >
         <img src="../../../assets/icons/user.svg" width="24" alt="">
       </div>
     </div>
 
-    <div class="py-3" [ngClass]="{'selected': selectedTab == '/notes'}">
-      <div class="icon text-center" (click)="goTo('/notes')">
+    <div class="py-3" [ngClass]="{'selected': selectedTab == notesUrl}">
+      <div class="icon text-center" (click)="goTo(notesUrl)">
         <img src="../../../assets/icons/archive.svg" width="24" alt="">
       </div>
     </div>
 
-    <div class="py-3" [ngClass]="{'selected': selectedTab == '/notes/public'}">
-      <div class="icon" (click)="goTo('/notes/public')">
+    <div class="py-3" [ngClass]="{'selected': selectedTab == publicNotesUrl}">
+      <div class="icon" (click)="goTo(publicNotesUrl)">
         <img src="../../../assets/icons/public.svg" width="24" alt="">
       </div>
     </div>
