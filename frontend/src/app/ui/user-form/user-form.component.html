@@ -1,0 +1,67 @@
+<form class="mt-4" (ngSubmit)="submitForm(userForm?.valid)" #userForm="ngForm">
+  <div class="form-group">
+    <!-- Fullname Input -->
+    <label for="fullname">Full name</label>
+    <input name="fullname" [(ngModel)]="user.fullname" type="text" class="form-control" required minlength="3"
+      maxlength="30" pattern="^([a-zA-Z]+\s?)+$" placeholder="Enter full name" #fullname="ngModel">
+
+    <!-- Validation Errors-->
+    <small *ngIf="registerForm?.submitted || (!fullname?.valid && !fullname?.pristine)" class="form-text">
+      <div *ngIf="fullname?.errors?.required" class="text-warning"> Fullname is required </div>
+      <div *ngIf="fullname?.errors?.minlength || fullname?.errors?.maxlength" class="text-warning">
+        Fullname length must be 3 to 30 charachters
+      </div>
+      <div *ngIf="fullname?.errors?.pattern" class="text-warning">
+        Please enter a valid name
+      </div>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <!-- E-mail Input -->
+    <label for="email">E-mail</label>
+    <input name="email" [(ngModel)]="user.email" type="email" class="form-control" required minlength="5" maxlength="40"
+      email placeholder="Enter email" #email="ngModel">
+
+    <!-- Validation Errors-->
+    <small *ngIf="registerForm?.submitted || (!email?.valid && !email?.pristine)" class="form-text">
+      <div *ngIf="email?.errors" class="text-warning"> Please enter a valid email </div>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input name="username" [(ngModel)]="user.username" type="text" class="form-control" required minlength="3"
+      maxlength="20" pattern="^[a-zA-Z1-9_]+$" placeholder="Enter Username">
+
+    <!-- Validation Errors-->
+    <small *ngIf="registerForm?.submitted || (!username?.valid && !username?.pristine)" class="form-text">
+      <div *ngIf="username?.errors?.required" class="text-warning"> Username is required </div>
+      <div *ngIf="username?.errors?.minlength || username?.errors?.maxlength" class="text-warning">
+        Username length must be 3 to 20 charachters
+      </div>
+      <div *ngIf="username?.errors?.pattern" class="text-warning">
+        Username can contain (letters, numbers, ., _) only
+      </div>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <!-- Password Input -->
+    <label for="password">Password</label>
+    <input type="password" [(ngModel)]="user.password" name="password" class="form-control" minlength="8" maxlength="255"
+      required placeholder="Password" #password="ngModel">
+
+    <!-- Validation Errors-->
+    <small *ngIf="registerForm?.submitted || (!password?.valid && !password?.pristine)" class="form-text">
+      <div *ngIf="password?.errors?.required" class="text-warning"> Password is required </div>
+      <div *ngIf="password?.errors?.minlength || password?.errors?.maxlength" class="text-warning">
+        Password length must be 8 to 255 charachters
+      </div>
+    </small>
+  </div>
+
+  <div class="pt-3">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+  </div>
+</form>
