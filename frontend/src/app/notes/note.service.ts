@@ -92,7 +92,7 @@ export class NoteService {
    * Create a new note
    * @param note the note that should be created
    */
-  public createNote(note: Note): Observable<ResponseObject> {
+  public createNote(note: Note): Observable<string> {
     return this.http.post<ResponseObject>(this.notesEndPoint, new RequestObject(note))
       .pipe(
         take(1),
@@ -102,7 +102,7 @@ export class NoteService {
             return response.error;
           }
           // return the new note and the notify message
-          return response;
+          return response.message;
         }));
   }
 
