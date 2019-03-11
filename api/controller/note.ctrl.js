@@ -252,18 +252,18 @@ module.exports.update = async function (req, res, next) {
 
 
 // delete note
-module.exports.update = async function (req, res, next) {
+module.exports.delete = async function (req, res, next) {
     try {
         // check if the request is valid and the JWT has decoded
-        if (!req || !req.userID || !req.body || !req.body.data)
+        if (!req || !req.userID || !req.params || !req.params.id)
             throw new Error('Bad request');
 
         // the request must contain the note id
-        if (!req.body.data.id)
-            throw new Error('Data must include the note id')
+        if (!req.params.id)
+            throw new Error('Params must include the note id')
 
         // shorthand for req.body.data.id
-        const noteID = req.body.data.id;
+        const noteID = req.params.id;
 
         // get the value of isAuthenticated (the current logged in user if exist)
         await isAuthenticated(User, req.userID).then(async (user) => {

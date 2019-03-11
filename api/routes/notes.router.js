@@ -8,7 +8,7 @@ router.post('/', Auth.decodeJWT, Note.create);
 
 router.put('/', Auth.decodeJWT, Note.update);
 
-router.delete('/', Auth.decodeJWT, Note.update);
+router.delete('/:id', Auth.decodeJWT, Note.delete);
 
 router.get('/public/', Auth.decodeJWT, Note.readAllPublic);
 
