@@ -1,0 +1,78 @@
+.note {
+  background: #FEF274;
+  border-radius: 5px;
+  padding: 32px;
+  max-height: 640px;
+  position: relative;
+
+  // title input style
+  input {
+    background: #FEF274;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+  }
+
+  // flat buttons
+  .btn-flat {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .btn-flat:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  // upload button ( used label to override the default style)
+  .imageFile-input {
+    display: inline-block;
+
+    label {
+      cursor: pointer;
+      margin: 0;
+    }
+  }
+
+  // top X sign
+  .cross-sign {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 25px;
+    z-index: 100;
+  }
+
+  // where the user right notes
+  // TODO: auto increase height
+  textarea {
+    background: #FEF274;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  // remove default bootstrap outlines and shadows
+  input:focus,
+  textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border: none;
+  }
+
+  // preview the image
+  img {
+    max-height: 300px;
+    border-radius: 5px;
+  }
+}
+
+// for small devices
+@media (max-width: 430px) {
+  .float-right {
+    float: left !important;
+  }
+  .btn {
+    padding: 5px;
+  }
+}

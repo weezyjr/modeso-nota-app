@@ -1,0 +1,48 @@
+<article class="card note my-3">
+  <button class="btn cross-sign" (click)="close()">X</button>
+  <form #noteForm="ngForm">
+
+    <div class="row">
+      <div class="col-12">
+        <input name="title" class="title-input" type="text" placeholder="Title" [(ngModel)]="note.title">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="img-contanier text-center pb-3" *ngIf="note?.image">
+          <img [src]="note?.image" [alt]="note?.title" class="img-fluid">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <textarea name="text" [(ngModel)]="note.text" autofocus placeholder="Write your note .." rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="controllers pt-3">
+      <!-- Image upload btn -->
+      <div class="imageFile-input btn">
+        <label>
+          <img src="../../../assets/icons/image.svg" alt="add image">
+          <input class="d-none" type="file" name="imageFile" (change)="uploadImage($event)">
+        </label>
+      </div>
+
+      <!-- Remove btn -->
+      <button class="btn" type="reset" (click)="remove()"> <img src="../../../assets/icons/bin.svg" alt="delete"></button>
+
+      <!-- Flat btns on the left -->
+      <button type="submit" name="saveAndShare" (click)="share()" *ngIf="!note?.public" class="btn btn-flat float-right">
+        SAVE & SHARE
+      </button>
+      <button type="submit" name="unshare" (click)="unshare()" *ngIf="note?.public" class="btn btn-flat float-right">
+        UNSHARE
+      </button>
+      <button type="submit" name="save" (click)="save()" class="btn btn-flat float-right"> SAVE </button>
+
+    </div>
+  </form>
+</article>
