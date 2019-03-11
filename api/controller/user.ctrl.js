@@ -268,6 +268,11 @@ module.exports.updateUser = async function (req, res, next) {
             if (!results[0])
             throw new Error('Note not found');
 
+	    	// delete password if exist
+	    	if(reqUser.password){
+				delete reqUser.password;
+			}
+
             // respond with the updated feilds
             res.statusCode = 200;
             res.json({
