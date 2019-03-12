@@ -17,7 +17,7 @@ export class LoginRegisterGuard implements CanActivate {
     if (currentUser && currentUser.jwt) {
 
       // logged in so redirect to dashboard
-      this.router.navigateByUrl('/dashboard');
+      this.router.navigateByUrl('/dashboard/notes');
       return false;
     }
 
