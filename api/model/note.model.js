@@ -10,17 +10,17 @@ const Note = db.define('Note', {
     },
 
     title: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
     },
 
     text: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
     },
 
     image: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
     },
 
