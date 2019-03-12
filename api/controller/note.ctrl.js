@@ -211,8 +211,8 @@ module.exports.update = async function (req, res, next) {
         const reqNote = req.body.data;
 
         // check if the note is empty
-        if (!reqNote.text && !reqNote.image && !reqNote.title)
-            throw new Error('Can\'t create empty note!')
+        if (!reqNote.text && !reqNote.image && !reqNote.title && !reqNote.public)
+            throw new Error('There is not feilds to update')
 
         // validate image url
         if (reqNote.image) {
