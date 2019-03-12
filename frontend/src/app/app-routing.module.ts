@@ -10,7 +10,7 @@ import { LoginRegisterGuard } from './auth/guards/login-register.guard';
 import { ProfileComponent } from './user/views/profile/profile.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/dashboard/notes', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginRegisterGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginRegisterGuard] },
   {
