@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
       await this.authService.register(this.user)
         .subscribe((msg) => {
           this.notifierService.notify('success', msg);
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/dashboard/notes');
         });
     }
   }

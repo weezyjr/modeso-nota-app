@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       await this.authService.login(this.user.username, this.user.password)
         .subscribe((msg) => {
           this.notifierService.notify('success', msg);
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/dashboard/notes');
         });
     }
   }
