@@ -16,7 +16,7 @@
   </div>
 </section>
 <app-modal *ngIf="modalOpened" (clickOutside)="closeModal()">
-  <app-note-form (done)="closeModal(); getNotes();" [note]="currentNote"></app-note-form>
+  <app-note-form (done)="closeModal();" [note]="currentNote"></app-note-form>
 </app-modal>
 
 

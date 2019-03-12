@@ -21,6 +21,9 @@ export class MyNotesPageComponent implements OnInit {
 
   closeModal() {
     this.modalOpened = false;
+
+    // update notes list
+    this.getNotes();
   }
 
   openModal(note: Note) {
