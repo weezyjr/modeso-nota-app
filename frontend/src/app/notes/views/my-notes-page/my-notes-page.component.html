@@ -7,6 +7,7 @@
 
 
     <h2 class="py-4"> Your Notes </h2>
+    <p class="text-light"> Click on a note to edit it. </p>
 
     <div class="card-columns">
       <app-note (click)="openModal(note);" *ngFor="let note of myNotes" [note]="note"></app-note>
