@@ -9,13 +9,22 @@ Nota (note in Latin) is a note-taking service,  which is available on the web. N
 
 a stack of express as web application framework for Node.js, sequalize as promise-based ORM for database. 
 
-### run backend server
+### run backend server for first time
 
+you have to create a database called Nota, 
 run the following command lines
+
+` mysql `
+
+` CREATE DATABASE Nota; `
+
+now you need to install the dependencies
 
 ` cd api `
 
 ` npm i `
+
+### run backend server
 
 ` node app `
 
