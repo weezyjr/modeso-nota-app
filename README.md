@@ -1,9 +1,6 @@
-# modeso-nota-app
+# nota-app
 
-Nota (note in Latin) is a note-taking service,  which is available on the web. Nota offers users to create notes, and share their notes with their friends.
-
-## Live production
-[nota-modeso](http://nota-modeso.ml).
+Nota is a note-taking service,  which is available on the web. Nota offers users to create notes, and share their notes with their friends.
 
 ## backend
 
